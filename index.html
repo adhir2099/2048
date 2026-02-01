@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Another - 2048 game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="2048">
+    <meta name="description" content="A beautiful 2048 game with undo functionality and smooth animations">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@8.15.0/dist/pixi.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>2048</h1>
+        <div class="score-container">
+            <div class="score-box">
+                <span class="score-label">SCORE</span>
+                <span class="score-value" id="score">0</span>
+            </div>
+            <div class="score-box">
+                <span class="score-label">BEST</span>
+                <span class="score-value" id="best-score">0</span>
+            </div>
+            <div class="score-box">
+                <span class="score-label">MOVES</span>
+                <span class="score-value" id="moves">0</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="game-container">
+        <div id="pixi-container"></div>
+        <div id="error-container" style="display:none;">
+            <h3>🎮 Oops! Game Failed to Load</h3>
+            <p>We encountered an issue initializing the game. This might be due to browser compatibility or temporary network issues.</p>
+            <button id="reload-btn">🔄 Try Again</button>
+        </div>
+        <div class="game-over" id="game-over">
+            <h2>GAME OVER</h2>
+            <p>Swipe to restart or tap the restart button</p>
+            <button class="btn btn-restart" id="retry-btn">TRY AGAIN</button>
+        </div>
+        <div class="game-won" id="game-won">
+            <h2>YOU WIN!</h2>
+            <p>Amazing! You reached 2048. Keep going to achieve higher scores!</p>
+            <button class="btn" id="keep-playing">KEEP PLAYING</button>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="btn btn-undo" id="undo-btn" disabled>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;">
+                <path d="M3 7v6h6l2 2 2-2h6V7l-2-2-2 2H9L7 5 3 7z"></path>
+                <path d="M19 17v-6h-6l-2-2-2 2H3v6l2 2 2-2h6l2 2 2-2h6l2-2z"></path>
+            </svg>
+            UNDO
+        </button>
+        <button class="btn btn-restart" id="restart-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;">
+                <path d="M21 2v6h-6M3 22v-6h6M15.5 3a8.5 8.5 0 1 1-8.5 8.5"></path>
+                <path d="M3 7l4-4 4 4M21 17l-4 4-4-4"></path>
+            </svg>
+            RESTART
+        </button>
+    </div>
+    
+    <div class="instructions">
+        <p>Join the tiles, get to <strong>2048!</strong></p>
+        <p>Use <strong>arrow keys</strong> or <strong>swipe</strong> to move tiles. When two tiles with the same number touch, they merge into one!</p>
+        <p>Press <strong>Undo</strong> to reverse your last move. Press <strong>Restart</strong> to start a new game.</p>
+    </div>
+    
+    <div id="installPrompt">
+        <p>Install this game on your device for a better experience!</p>
+        <button id="installBtn">Install App</button>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

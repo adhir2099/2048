@@ -1,0 +1,365 @@
+﻿* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: linear-gradient(135deg, #0f3460, #1a1a2e, #16213e);
+	color: #fff;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	overflow-x: hidden;
+	text-align: center;
+}
+
+#game-container {
+	position: relative;
+	width: 100%;
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+#pixi-container {
+	width: 100%;
+	height: 100%;
+	min-height: 400px;
+	background: rgba(22, 33, 62, 0.85);
+	border-radius: 16px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 30, 80, 0.7);
+	overflow: hidden;
+	position: relative;
+	border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+	text-align: center;
+	margin-bottom: 25px;
+	width: 100%;
+	padding: 0 15px;
+}
+
+h1 {
+	font-size: 3.5rem;
+	margin-bottom: 8px;
+	background: linear-gradient(45deg, #ff6584, #ff9e6d, #ffd166);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+	letter-spacing: -1px;
+	font-weight: 800;
+	position: relative;
+	display: inline-block;
+}
+
+h1::after {
+	content: "2048";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(45deg, #ff6584, #ff9e6d, #ffd166);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	opacity: 0.2;
+	z-index: -1;
+	transform: scale(1.05, 1.07);
+}
+
+.score-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+	background: rgba(30, 40, 70, 0.8);
+	border-radius: 12px;
+	padding: 12px 20px;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+	font-weight: 600;
+}
+
+.score-box {
+	text-align: center;
+	min-width: 80px;
+}
+
+.score-label {
+	font-size: 0.85rem;
+	color: #a0a0c0;
+	display: block;
+	margin-bottom: 4px;
+}
+
+.score-value {
+	font-size: 1.5rem;
+	color: white;
+	font-weight: 700;
+}
+
+.controls {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 25px;
+	flex-wrap: wrap;
+}
+
+.btn {
+	background: linear-gradient(45deg, #16213e, #0f3460);
+	color: white;
+	border: none;
+	padding: 14px 28px;
+	font-size: 1.1rem;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 120px;
+	justify-content: center;
+}
+
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn:active {
+	transform: translateY(1px);
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.btn-undo {
+	background: linear-gradient(45deg, #4a4e69, #22223b);
+}
+
+.btn-restart {
+	background: linear-gradient(45deg, #ff6584, #ff5252);
+}
+
+.btn:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+	transform: none;
+}
+
+.instructions {
+	margin-top: 25px;
+	background: rgba(30, 40, 70, 0.7);
+	border-radius: 16px;
+	padding: 15px;
+	max-width: 500px;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.instructions p {
+	margin-bottom: 8px;
+}
+
+.instructions strong {
+	color: #ffd166;
+}
+
+.game-over,
+.game-won {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 15, 45, 0.92);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+	border-radius: 16px;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.4s ease;
+}
+
+.game-over.show,
+.game-won.show {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.game-over h2,
+.game-won h2 {
+	font-size: 4rem;
+	margin-bottom: 20px;
+	background: linear-gradient(45deg, #ff6584, #ff5252);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.game-won h2 {
+	background: linear-gradient(45deg, #ffd166, #ff9e6d);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.game-over p,
+.game-won p {
+	font-size: 1.4rem;
+	margin-bottom: 30px;
+	max-width: 80%;
+	text-align: center;
+	color: #e0e0ff;
+}
+
+@media (max-width:550px) {
+	h1 {
+		font-size: 2.8rem;
+	}
+
+	.score-container {
+		flex-direction: column;
+		gap: 10px;
+		padding: 15px;
+	}
+
+	.controls {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.btn {
+		width: 100%;
+		max-width: 250px;
+		padding: 16px;
+	}
+
+	.instructions {
+		font-size: 0.9rem;
+		padding: 12px;
+	}
+
+	#pixi-container {
+		min-height: 350px;
+	}
+}
+
+@media (max-width:360px) {
+	h1 {
+		font-size: 2.5rem;
+	}
+
+	.game-over h2,
+	.game-won h2 {
+		font-size: 3.2rem;
+	}
+
+	.game-over p,
+	.game-won p {
+		font-size: 1.2rem;
+	}
+}
+
+#installPrompt {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	right: 20px;
+	background: rgba(30, 40, 70, 0.95);
+	color: white;
+	padding: 15px;
+	border-radius: 16px;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+	z-index: 1000;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#installPrompt.show {
+	display: flex;
+}
+
+#installPrompt p {
+	margin-bottom: 12px;
+	text-align: center;
+	font-size: 0.95rem;
+}
+
+#installBtn {
+	background: linear-gradient(45deg, #ff6584, #ff9e6d);
+	color: white;
+	border: none;
+	padding: 10px 25px;
+	border-radius: 50px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+#installBtn:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 15px rgba(255, 101, 132, 0.4);
+}
+
+#error-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 15, 45, 0.95);
+	color: white;
+	z-index: 1000;
+	border-radius: 16px;
+	padding: 20px;
+}
+
+#error-container h3 {
+	color: #ff5252;
+	margin-bottom: 15px;
+	font-size: 1.8rem;
+}
+
+#error-container p {
+	margin-bottom: 20px;
+	max-width: 80%;
+	text-align: center;
+	line-height: 1.6;
+}
+
+#reload-btn {
+	background: #ff5252;
+	color: white;
+	border: none;
+	padding: 12px 30px;
+	border-radius: 50px;
+	font-size: 1.1rem;
+	cursor: pointer;
+}
+
+#reload-btn:hover {
+	background: #ff6584;
+	transform: scale(1.05);
+}
