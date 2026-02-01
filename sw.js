@@ -4,8 +4,8 @@ const ASSETS = [
   './index.html',
   './manifest.json',
   './sw.js',
-  'https://cdn.jsdelivr.net/npm/pixi.js@7/dist/pixi.min.js',
-  'https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js',
+  'https://cdn.jsdelivr.net/npm/pixi.js@8.15.0/dist/pixi.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js',
   'https://cdn.jsdelivr.net/npm/pixi-filters/dist/pixi-filters.js'
 ];
 
